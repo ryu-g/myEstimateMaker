@@ -17,10 +17,10 @@
       li 〒 {{from.postalCode}}
       li {{from.address1}}
       li {{from.address2}}
-      li {{from.phone}}
+      li TEL : {{from.phone}}
       li {{from.fax}}
-      li {{from.Email}}
-      li {{from.person}}
+      li MAIL : {{from.Email}}
+      li 担当 : {{from.person}}
   
   .estimatePrice
     ul.table
@@ -45,7 +45,6 @@
         li.item.amout(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
         li.item.subtotal(contenteditable='false' @blur="onBlur($event, key, 'sum')") {{ value.sum }}
 
-
       
     ul.table
       li.result.subAmount 小計
@@ -57,13 +56,22 @@
       li.result.total 合計
       li.item.total {{ total }}
 
-    p 消費税
-    p 金額
+
+
+
   .other
-   p 支払条件
-   p 振込手数料負担
-   p 有効期限
-   p 備考欄  
+    .option
+      h4 支払条件
+      p(contenteditable = "true") あいうえお
+    .option
+      h4 振込手数料負担
+      p(contenteditable = "true") 御社にてご負担願います
+    .option
+      h4 有効期限
+      p(contenteditable = "true") 発行日から2019/2/1まで
+    .option
+      h4 備考
+      p(contenteditable = "true") ほげほげ
 </template>
 
 <script>
@@ -75,46 +83,38 @@ export default {
     return {
       msg: '御見積書',
       direction: {
-        company: "hogehogehogehoge株式会社 御中",
-        postalCode: "000-0000",
-        address1: "太陽系地球日本東京都千代田区1-1-1-1",
-        address2: "超スーパーハイパーウルトラ長い名前のビルディング40号11階",
-        person: "ご担当: 超長名字侍 名前非尋常長太郎 様"
+        company: "beidp 御中",
+        postalCode: "",
+        address1: "",
+        address2: "",
+        person: "ご担当: hoge 様"
       },
+      // from: {
+      //   company: "",
+      //   postalCode: "000-0000",
+      //   address1: "函館市昭和1丁目3-40",
+      //   address2: "サンビレッジ昭和ウェスト館108号",
+      //   phone: "090-6870-8093",
+      //   fax: "",
+      //   Email: "em.ryu.g@gmail.com",
+      //   person: "me"
+      // },
       from: {
-        company: "hogehogehogehoge株式会社 御中",
-        postalCode: "000-0000",
-        address1: "太陽系地球日本東京都千代田区1-1-1-1",
-        address2: "超スーパーハイパーウルトラ長い名前のビルディング40号11階",
-        phone: "TEL:000-000-000",
-        fax: "FAX:000-000-000",
-        Email: "E-mail tooLongAndSuperRangeEmailAdress@hogeMail.com",
-        person: "担当: 超長名字侍 名前非尋常長太郎 様"
-      },
+              company: "ヒゲダルマ株式会社",
+              postalCode: "000-0000",
+              address1: "東京都千代田区1-1-1",
+              address2: "クソながファッキンロングネーミングビルディング101",
+              phone: "090-0909-09-09",
+              fax: "9090990",
+              Email: "gmail.com@gmail.com",
+              person: "me"
+            },
       object: [
         {
           mainNo: 1,
           subNo: 1,
-          date: 30,
-          name: 'itemName',
-          price: 0,
-          num: 1,
-          sum: 0
-        },
-        {
-          mainNo: 1,
-          subNo: 1,
-          date: 30,
-          name: 'itemName',
-          price: 0,
-          num: 1,
-          sum: 0
-        },
-        {
-          mainNo: 1,
-          subNo: 1,
-          date: 30,
-          name: 'itemName',
+          date: "2018/12/31",
+          name: 'CMS導入',
           price: 0,
           num: 1,
           sum: 0
@@ -122,9 +122,108 @@ export default {
         {
           mainNo: 2,
           subNo: 1,
-          date: 30,
-          name: 'itemName',
-          price: 0,
+          date: "2018/12/31",
+          name: 'トップページデザイン',
+          price: 50000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 2,
+          date: "2018/12/31",
+          name: '会社紹介ページデザイン',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 3,
+          date: "2018/12/31",
+          name: 'お知らせページデザイン',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 4,
+          date: "2018/12/31",
+          name: '実績一覧ページデザイン',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 5,
+          date: "2018/12/31",
+          name: '実績個別ページデザイン',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 6,
+          date: "2018/12/31",
+          name: 'お問い合わせページデザイン',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: 3,
+          subNo: 1,
+          date: "2018/12/31",
+          name: 'トップページ開発',
+          price: 30000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 2,
+          date: "2018/12/31",
+          name: '会社紹介ページ開発',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 3,
+          date: "2018/12/31",
+          name: 'お知らせページ開発',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 4,
+          date: "2018/12/31",
+          name: '実績一覧ページ開発',
+          price: 30000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 5,
+          date: "2018/12/31",
+          name: '実績個別ページ開発',
+          price: 20000,
+          num: 1,
+          sum: 0
+        },
+        {
+          mainNo: "",
+          subNo: 6,
+          date: "2018/12/31",
+          name: 'お問い合わせページ開発',
+          price: 35000,
           num: 1,
           sum: 0
         }
@@ -140,7 +239,10 @@ export default {
     document.getElementsByClassName('total')[0].addEventListener(('click'), () => {
       console.log(vm)
     })
+    this.init()
+
   },
+
   methods: {
     onBlur: (e, i, param) => {
       vm.object[i][param] = e.target.innerText
@@ -157,17 +259,43 @@ export default {
 
         vm.subtotal = sum
         vm.tax = Math.floor(vm.subtotal * vm.taxRatio - vm.subtotal)
-        vm.total = vm.subtotal + vm.tax   
+        vm.total = (vm.subtotal + vm.tax).toLocaleString()
       }
-    }
+    },
+
+    init(){
+      let tmpSum = 0
+      for(const i in vm.object){
+      console.log(vm.object[i].num);
+      vm.object[i].sum = vm.object[i].price * vm.object[i].num
+      tmpSum += vm.object[i].sum
+      }
+
+      vm.subtotal = tmpSum
+      vm.tax = Math.floor(vm.subtotal * vm.taxRatio - vm.subtotal)
+      vm.total = vm.subtotal + vm.tax   
+
+    },
+    // separate(num){
+    //   num = String(num);
+    //   let len = num.length;
+    //   if(len > 3){
+    //       return separate(num.substring(0,len-3))+','+num.substring(len-3);
+    //   } else {
+    //       return Number(num);
+    //   }
+    // }
+
   }
 }
 
 </script>
 
 <style lang="stylus">
-@page
+
+h1 h2 h3 h4 div p ul li
   margin 0
+  padding 0
 
 #app 
   font-family 'Avenir', Helvetica, Arial, sans-serif
@@ -176,24 +304,32 @@ export default {
   text-align center
   color #2c3e50
   display block
-  width 80vw
-  height 113vw
+  width 100vw
+  height 141.4vw
   border 1px solid #999
-  margin 50px auto
+  margin 0 auto
 
   h1
     font-size 3vw
     font-weight normal
     padding 6vw 0 4vw 0
     margin 0
-
-  font-size 1.4vw
-  margin 5px
+  h4
+    font-size 1.4vw
+    font-weight bold
+    text-align left
 
 ul 
   list-style-type none
   padding 0
   margin 0
+
+@media print
+  #app
+    width 100%
+    height 141vw
+    margin 0
+    padding 0
 
 
 .metaInfo
@@ -213,33 +349,34 @@ ul
   .direction
     width 50%
     li
-      font-size 1.4vw
+      font-size 1.2vw
       line-height: 2.5vw
   .from
     width 50%
     margin-left 20px
     li
-      font-size 1.4vw
-      line-height: 2.5vw
+      font-size 1.2vw
+      line-height: 2.4vw
 
 .estimatePrice
   width 90%
-  margin 5vw auto
+  margin 3vw auto
   .table
     display grid
     // Main No., sub no. 年月日,品目名,単価,数量,金額
     grid-template-columns 1fr 1fr 1.5fr 5fr 1fr 1fr 1fr
     grid-gap 4px 2px
-    margin 2px 0
+    margin .1vw 0
     li
       margin 0
-      padding .8vw .5vw
+      padding .6vw .5vw
       font-size 1.4vw
 
     .payHeading
       grid-column 1 / 4
       background-color #333
       color #fff
+      font-weight bold
     .payItem
       grid-column 4 / 5
       background-color #eee
@@ -261,9 +398,18 @@ ul
       justify-content center
       background-color #eee
       color #333
-      font-size 1.2vw
+      font-size 1.4vw
       line-height 1.6vw
+    .item.total 
+    .item.subAmount
+    .item.tax
+    .item.subtotal
+      background-color: #ddd
 
+    .option
+      grid-column 1 / 3
+      font-size: 1.2vw
+      line-height: 1.5vw
     .result
       grid-column 5 / 7
       background-color #333
@@ -274,7 +420,24 @@ ul
       display flex
       align-items center
       justify-content center
-
+.other
+  width 80%
+  margin 0 auto
+  //border solid 1px #aaa
+  
+  .option
+    display flex
+    align-items flex-start
+    margin 2vw 0
+    h4
+      display block
+      width 14vw
+      margin 0
+    p
+      width 65vw
+      font-size 1.4vw
+      text-align left
+      margin 0
 
 
 </style>
