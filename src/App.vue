@@ -1,10 +1,10 @@
 <template lang="pug">
 #app
-  h1 {{ msg }}
   .metaInfo
     .meta
       p 御見積番号 : 000000
       p 発行日 : 0000
+  h1 {{ msg }}
   .information
     ul.direction
       li {{ direction.company }}
@@ -352,7 +352,7 @@ h1 h2 h3 h4 div p ul li
   h1
     font-size 3vw
     font-weight normal
-    padding 6vw 0 4vw 0
+    padding 2vw 0 4vw 0
     margin 0
   h4
     font-size 1.4vw
@@ -370,12 +370,15 @@ ul
     height 141vw
     margin 0
     padding 0
+  .addItem
+  .deleteItem
+    display none
 
 .metaInfo
   display flex
   flex-direction row-reverse
   width 80%
-  margin 20px auto
+  margin 40px auto 0 auto
   text-align left
   p 
     font-size 1.2vw 
@@ -394,8 +397,8 @@ ul
     width 50%
     margin-left 20px
     li
-      font-size 1.2vw
-      line-height: 2.4vw
+      font-size 1.1vw
+      line-height: 2.0vw
 
 .estimatePrice
   width 90%
