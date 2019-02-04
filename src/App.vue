@@ -37,12 +37,12 @@
 
     div#hogehoge
       ul.table(v-for = "(value, key) in object")
-        li.item.number(contenteditable='true' @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }} 
-        li.item.number(contenteditable='true' @blur="onBlur($event, key, 'subNo')") {{ value.subNo }}
-        li.item.date(contenteditable='true' @blur="onBlur($event, key, 'date')") {{ value.date }}
-        li.item.name(contenteditable='true' @blur="onBlur($event, key, 'name')") {{ value.name }}
-        li.item.price(contenteditable='true' @blur="onBlur($event, key, 'price')") {{ value.price }}
-        li.item.amount(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
+        li.item.number.editable(contenteditable='true' @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }} 
+        li.item.number.editable(contenteditable='true' @blur="onBlur($event, key, 'subNo')") {{ value.subNo }}
+        li.item.date.editable(contenteditable='true' @blur="onBlur($event, key, 'date')") {{ value.date }}
+        li.item.name.editable(contenteditable='true' @blur="onBlur($event, key, 'name')") {{ value.name }}
+        li.item.price.editable(contenteditable='true' @blur="onBlur($event, key, 'price')") {{ value.price }}
+        li.item.amount.editable(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
         li.item.subtotal(contenteditable='false' @blur="onBlur($event, key, 'sum')") {{ value.sum }}
 
       
@@ -64,16 +64,16 @@
   .other
     .option
       h4 支払条件
-      p(contenteditable = "true") あいうえお
+      p.editable(contenteditable = "true") あいうえお
     .option
       h4 振込手数料負担
-      p(contenteditable = "true") 御社にてご負担願います
+      p.editable(contenteditable = "true") 御社にてご負担願います
     .option
       h4 有効期限
-      p(contenteditable = "true") 発行日から2019/2/1まで
+      p.editable(contenteditable = "true") 発行日から2019/2/1まで
     .option
       h4 備考
-      p(contenteditable = "true") ほげほげ
+      p.editable(contenteditable = "true") ほげほげ
 </template>
 
 <script>
@@ -412,6 +412,7 @@ ul
     margin .2vw 0
     li
       margin 0
+      color #333
       padding .6vw .5vw
       font-size 1.4vw
       overflow hidden
@@ -454,7 +455,6 @@ ul
       align-items center
       justify-content center
       background-color #eee
-      color #333
       font-size 1.4vw
       line-height 1.6vw
     .price
@@ -506,4 +506,11 @@ ul
       line-height 2vw
       text-align left
       margin 0
+
+li.editable
+p.editable
+  cursor text
+  transition .12s
+  &:hover
+    color #40A900
 </style>
