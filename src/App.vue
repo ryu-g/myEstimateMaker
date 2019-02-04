@@ -263,7 +263,8 @@ export default {
     document.getElementsByClassName('deleteItem')[0].addEventListener(('click'), () => {
       console.log("clicked Delete");
       const index = this.object.length
-      vm.$delete(this.object, index)
+      // vm.$delete(this.object, index)
+      vm.object.splice(index-1, 1)
       console.log("delete target object length is " + this.object.length);
       vm.getDatas()
     })
