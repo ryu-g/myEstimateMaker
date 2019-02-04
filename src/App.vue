@@ -31,9 +31,9 @@
       li.heading.number sub no.
       li.heading.date 年 / 月 / 日
       li.heading.name 品目名
-      li.heading.price 単価
-      li.heading.amout 数量
-      li.heading.subtotal 金額
+      li.heading 単価
+      li.heading 数量
+      li.heading 金額
 
     div#hogehoge
       ul.table(v-for = "(value, key) in object")
@@ -42,7 +42,7 @@
         li.item.date(contenteditable='true' @blur="onBlur($event, key, 'date')") {{ value.date }}
         li.item.name(contenteditable='true' @blur="onBlur($event, key, 'name')") {{ value.name }}
         li.item.price(contenteditable='true' @blur="onBlur($event, key, 'price')") {{ value.price }}
-        li.item.amout(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
+        li.item.amount(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
         li.item.subtotal(contenteditable='false' @blur="onBlur($event, key, 'sum')") {{ value.sum }}
 
       
@@ -338,7 +338,7 @@ h1 h2 h3 h4 div p ul li
   padding 0
 
 #app 
-  font-family 'Avenir', Helvetica, Arial, sans-serif
+  font-family  Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   text-align center
@@ -380,6 +380,7 @@ ul
   width 80%
   margin 40px auto 0 auto
   text-align left
+  color #777
   p 
     font-size 1.2vw 
 .information
@@ -406,13 +407,14 @@ ul
   .table
     display grid
     // Main No., sub no. 年月日,品目名,単価,数量,金額
-    grid-template-columns 1fr 1fr 1.5fr 5fr 1fr 1fr 1fr
+    grid-template-columns .8fr .8fr 1.5fr 5fr 1fr .8fr 1fr
     grid-gap .3vw .2vw
     margin .2vw 0
     li
       margin 0
       padding .6vw .5vw
       font-size 1.4vw
+      overflow hidden
  
     .addItem
       background-color #7CBF7F
@@ -455,6 +457,14 @@ ul
       color #333
       font-size 1.4vw
       line-height 1.6vw
+    .price
+    .amount
+    .subtotal
+    .subAmount
+    .tax
+    .total
+      justify-content flex-end  
+
     .item.total 
     .item.subAmount
     .item.tax
