@@ -47,6 +47,8 @@
 
       
     ul.table
+      li.addItem ADD
+      li.deleteItem DELETE
       li.result.subAmount 小計
       li.item.subAmount {{ subtotal }}
 
@@ -226,7 +228,7 @@ export default {
           price: '35,000',
           num: 1,
           sum: 0
-        }
+        },
       ],
       subtotal: 0,
       taxRatio: 1.08,
@@ -238,23 +240,49 @@ export default {
   mounted () {
     vm = this
     document.getElementsByClassName('total')[0].addEventListener(('click'), () => {
-      console.log(vm)
+      console.log(vm.object)
     })
-    vm.init()
+    document.getElementsByClassName('addItem')[0].addEventListener(('click'), () => {
+      console.log("clicked ADD");
+      const newData = 
+        {
+          mainNo: "9",
+          subNo: 9,
+          date: "2018/12/31",
+          name: 'sample',
+          price: 1,
+          num: 1,
+          sum: 0
+        }
+      console.table(newData)
+      const index = this.object.length
+      console.log("object length is " + this.object.length);
+      vm.$set(this.object, index, newData)
+      vm.getDatas()
+    })
+    document.getElementsByClassName('deleteItem')[0].addEventListener(('click'), () => {
+      console.log("clicked Delete");
+      const index = this.object.length
+      vm.$delete(this.object, index)
+      console.log("delete target object length is " + this.object.length);
+      vm.getDatas()
+    })
+    vm.getDatas()
   },
 
   methods: {
-    init: ()=>{//起動時アイテムの金額が入っている場合、小計・税・合計金額を算出
-      console.log("こちらinitialize, 各数値の初期化を開始")
-      let tmpSum = 0
+    getDatas: ()=>{
+      console.log("各数値を更新します")
+      let sum = 0
+
       let price
       let num
       for(const i in vm.object){
         vm.object[i].sum = vm.removeLetter(vm.object[i].price) * vm.removeLetter(vm.object[i].num)
-        tmpSum += vm.removeLetter(vm.object[i].sum)
+        sum += vm.removeLetter(vm.object[i].sum)
         vm.object[i].sum = vm.object[i].sum.toLocaleString()
       }
-      vm.subtotal = tmpSum.toLocaleString()          // add camma to subtotal
+      vm.subtotal = sum.toLocaleString()          // add camma to subtotal
       const subs = vm.removeLetter(vm.subtotal)      // shrink subtotal
       vm.tax = Math.floor(subs * vm.taxRatio - subs) // calc tax 
       vm.tax = vm.tax.toLocaleString()                // add camma to tax
@@ -271,6 +299,7 @@ export default {
     AndAddComma: (num) => {
       return num.toLocaleString()
     },
+    //数字入力欄のフォーカス解除時発火
     onBlur: (e, i, param) => {
       vm.object[i][param] = e.target.innerText
       if (param === 'num' || param === 'price') {
@@ -341,7 +370,6 @@ ul
     margin 0
     padding 0
 
-
 .metaInfo
   display flex
   flex-direction row-reverse
@@ -381,6 +409,19 @@ ul
       margin 0
       padding .6vw .5vw
       font-size 1.4vw
+ 
+    .addItem
+      background-color #7CBF7F
+      color white
+      font-weight bold
+      font-size 1.4vw
+      align-items center
+    .deleteItem
+      background-color #B04F4F
+      color white
+      font-weight bold
+      font-size 1.4vw
+      align-items center
 
     .payHeading
       grid-column 1 / 4
@@ -416,10 +457,6 @@ ul
     .item.subtotal
       background-color: #ddd
 
-    .option
-      grid-column 1 / 3
-      font-size: 1.2vw
-      line-height: 1.5vw
     .result
       grid-column 5 / 7
       background-color #333
@@ -430,6 +467,12 @@ ul
       display flex
       align-items center
       justify-content center
+
+    .option
+      grid-column 1 / 3
+      font-size: 1.2vw
+      line-height: 1.5vw
+
 .other
   width 80%
   margin 0 auto
@@ -449,6 +492,4 @@ ul
       line-height 2vw
       text-align left
       margin 0
-
-
 </style>
