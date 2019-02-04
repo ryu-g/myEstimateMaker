@@ -124,7 +124,7 @@ export default {
           subNo: 1,
           date: "2018/12/31",
           name: 'トップページデザイン',
-          price: 50000,
+          price: '50,000',
           num: 1,
           sum: 0
         },
@@ -133,7 +133,7 @@ export default {
           subNo: 2,
           date: "2018/12/31",
           name: '会社紹介ページデザイン',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -142,7 +142,7 @@ export default {
           subNo: 3,
           date: "2018/12/31",
           name: 'お知らせページデザイン',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -151,7 +151,7 @@ export default {
           subNo: 4,
           date: "2018/12/31",
           name: '実績一覧ページデザイン',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -160,7 +160,7 @@ export default {
           subNo: 5,
           date: "2018/12/31",
           name: '実績個別ページデザイン',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -169,7 +169,7 @@ export default {
           subNo: 6,
           date: "2018/12/31",
           name: 'お問い合わせページデザイン',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -178,7 +178,7 @@ export default {
           subNo: 1,
           date: "2018/12/31",
           name: 'トップページ開発',
-          price: 30000,
+          price: '30,000',
           num: 1,
           sum: 0
         },
@@ -187,7 +187,7 @@ export default {
           subNo: 2,
           date: "2018/12/31",
           name: '会社紹介ページ開発',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -196,7 +196,7 @@ export default {
           subNo: 3,
           date: "2018/12/31",
           name: 'お知らせページ開発',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -205,7 +205,7 @@ export default {
           subNo: 4,
           date: "2018/12/31",
           name: '実績一覧ページ開発',
-          price: 30000,
+          price: '30,000',
           num: 1,
           sum: 0
         },
@@ -214,7 +214,7 @@ export default {
           subNo: 5,
           date: "2018/12/31",
           name: '実績個別ページ開発',
-          price: 20000,
+          price: '20,000',
           num: 1,
           sum: 0
         },
@@ -223,7 +223,7 @@ export default {
           subNo: 6,
           date: "2018/12/31",
           name: 'お問い合わせページ開発',
-          price: 35000,
+          price: '35,000',
           num: 1,
           sum: 0
         }
@@ -234,58 +234,68 @@ export default {
       total: 0
     }
   },
+
   mounted () {
     vm = this
     document.getElementsByClassName('total')[0].addEventListener(('click'), () => {
       console.log(vm)
     })
-    this.init()
-
+    vm.init()
   },
 
   methods: {
+    init: ()=>{//起動時アイテムの金額が入っている場合、小計・税・合計金額を算出
+      console.log("こちらinitialize, 各数値の初期化を開始")
+      let tmpSum = 0
+      let price
+      let num
+      for(const i in vm.object){
+        vm.object[i].sum = vm.removeLetter(vm.object[i].price) * vm.removeLetter(vm.object[i].num)
+        tmpSum += vm.removeLetter(vm.object[i].sum)
+        vm.object[i].sum = vm.object[i].sum.toLocaleString()
+      }
+      vm.subtotal = tmpSum.toLocaleString()          // add camma to subtotal
+      const subs = vm.removeLetter(vm.subtotal)      // shrink subtotal
+      vm.tax = Math.floor(subs * vm.taxRatio - subs) // calc tax 
+      vm.tax = vm.tax.toLocaleString()                // add camma to tax
+      vm.total = (vm.removeLetter(subs) + vm.removeLetter(vm.tax)).toLocaleString() //calc total
+    },
+
+    removeLetter: (txt) => {
+      if(isNaN(txt)){
+        let replaced = txt.replace(/[^0-9]/g, '')
+        return Number(replaced)
+      }
+      return Number(txt)
+    },
+    AndAddComma: (num) => {
+      return num.toLocaleString()
+    },
     onBlur: (e, i, param) => {
       vm.object[i][param] = e.target.innerText
-      if (param === 'num'||param === 'price') {
+      if (param === 'num' || param === 'price') {
         let sum = 0
 
-        vm.object[i][param] = Number(vm.object[i][param].replace(/[^0-9]/g, ''))
+        vm.object[i][param] = vm.removeLetter(vm.object[i][param]).toLocaleString()//異物を撮ってからComma追加
         e.target.innerText = vm.object[i][param]
-        vm.object[i]['sum'] = (vm.object[i]['num']) * vm.object[i]['price']
+        vm.object[i]['sum'] = vm.removeLetter(vm.object[i]['num']) * vm.removeLetter(vm.object[i]['price'])
+        vm.object[i]['sum'] = Number(vm.object[i]['sum'])
         // calcurate subtotal with price by num
         for (const i in vm.object) {
-          sum += Number(vm.object[i].sum)
+          //console.log("[285]sum is : " + (vm.object[i].sum))
+          sum += vm.removeLetter(vm.object[i].sum)
+          vm.object[i].sum = vm.object[i].sum.toLocaleString()
+          console.log("[287]added sum is  " + vm.removeLetter(sum));
         }
-
-        vm.subtotal = sum
-        vm.tax = Math.floor(vm.subtotal * vm.taxRatio - vm.subtotal)
-        vm.total = (vm.subtotal + vm.tax).toLocaleString()
+        console.log("-------");
+        vm.subtotal = sum.toLocaleString()
+        const subs = vm.removeLetter(vm.subtotal)
+        console.log("subs: "+subs);
+        vm.tax = Math.floor(subs * vm.taxRatio - subs)
+        vm.tax = vm.tax.toLocaleString()
+        vm.total = (vm.removeLetter(subs) + vm.removeLetter(vm.tax)).toLocaleString()
       }
     },
-
-    init(){
-      let tmpSum = 0
-      for(const i in vm.object){
-      console.log(vm.object[i].num);
-      vm.object[i].sum = vm.object[i].price * vm.object[i].num
-      tmpSum += vm.object[i].sum
-      }
-
-      vm.subtotal = tmpSum
-      vm.tax = Math.floor(vm.subtotal * vm.taxRatio - vm.subtotal)
-      vm.total = vm.subtotal + vm.tax   
-
-    },
-    // separate(num){
-    //   num = String(num);
-    //   let len = num.length;
-    //   if(len > 3){
-    //       return separate(num.substring(0,len-3))+','+num.substring(len-3);
-    //   } else {
-    //       return Number(num);
-    //   }
-    // }
-
   }
 }
 
@@ -365,8 +375,8 @@ ul
     display grid
     // Main No., sub no. 年月日,品目名,単価,数量,金額
     grid-template-columns 1fr 1fr 1.5fr 5fr 1fr 1fr 1fr
-    grid-gap 4px 2px
-    margin .1vw 0
+    grid-gap .3vw .2vw
+    margin .2vw 0
     li
       margin 0
       padding .6vw .5vw
@@ -436,6 +446,7 @@ ul
     p
       width 65vw
       font-size 1.4vw
+      line-height 2vw
       text-align left
       margin 0
 
