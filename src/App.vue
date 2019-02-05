@@ -45,10 +45,9 @@
         li.item.amount.editable(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
         li.item.subtotal(contenteditable='false' @blur="onBlur($event, key, 'sum')") {{ value.sum }}
 
-      
     ul.table
-      li.addItem ADD
-      li.deleteItem DELETE
+      li.addItem 末尾に追加
+      li.deleteItem 末尾を削除
       li.result.subAmount 小計
       li.item.subAmount {{ subtotal }}
 
@@ -57,9 +56,6 @@
 
       li.result.total 合計
       li.item.total {{ total }}
-
-
-
 
   .other
     .option
@@ -77,7 +73,7 @@
 </template>
 
 <script>
-import 'normalize.css';
+import 'normalize.css'
 let vm
 export default {
   name: 'app',
@@ -243,29 +239,29 @@ export default {
       console.log(vm.object)
     })
     document.getElementsByClassName('addItem')[0].addEventListener(('click'), () => {
-      console.log("clicked ADD");
+      console.log("clicked ADD")
       const newData = 
         {
-          mainNo: "9",
-          subNo: 9,
-          date: "2018/12/31",
+          mainNo: "999",
+          subNo: "999",
+          date: "2036/21/26",
           name: 'sample',
-          price: 1,
-          num: 1,
-          sum: 0
+          price: 0,
+          num: 999,
+          sum: 99
         }
       console.table(newData)
       const index = this.object.length
-      console.log("object length is " + this.object.length);
+      console.log("object length is " + this.object.length)
       vm.$set(this.object, index, newData)
       vm.getDatas()
     })
     document.getElementsByClassName('deleteItem')[0].addEventListener(('click'), () => {
-      console.log("clicked Delete");
+      console.log("clicked Delete")
       const index = this.object.length
       // vm.$delete(this.object, index)
       vm.object.splice(index-1, 1)
-      console.log("delete target object length is " + this.object.length);
+      console.log("delete target object length is " + this.object.length)
       vm.getDatas()
     })
     vm.getDatas()
@@ -315,12 +311,12 @@ export default {
           //console.log("[285]sum is : " + (vm.object[i].sum))
           sum += vm.removeLetter(vm.object[i].sum)
           vm.object[i].sum = vm.object[i].sum.toLocaleString()
-          console.log("[287]added sum is  " + vm.removeLetter(sum));
+          console.log("[287]added sum is  " + vm.removeLetter(sum))
         }
-        console.log("-------");
+        console.log("-------")
         vm.subtotal = sum.toLocaleString()
         const subs = vm.removeLetter(vm.subtotal)
-        console.log("subs: "+subs);
+        console.log("subs: "+subs)
         vm.tax = Math.floor(subs * vm.taxRatio - subs)
         vm.tax = vm.tax.toLocaleString()
         vm.total = (vm.removeLetter(subs) + vm.removeLetter(vm.tax)).toLocaleString()
@@ -332,6 +328,11 @@ export default {
 </script>
 
 <style lang="stylus">
+heading-bg = #333
+item-bg = #efefef
+uneditableItem-bg = #dedede
+
+
 
 h1 h2 h3 h4 div p ul li
   margin 0
@@ -352,7 +353,7 @@ h1 h2 h3 h4 div p ul li
   h1
     font-size 3vw
     font-weight normal
-    padding 2vw 0 4vw 0
+    padding 2vw 0 6vw 0
     margin 0
   h4
     font-size 1.4vw
@@ -437,11 +438,11 @@ ul
       font-weight bold
     .payItem
       grid-column 4 / 5
-      background-color #eee
+      background-color item-bg
       font-weight bold
       
     .heading
-      background-color #333
+      background-color heading-bg
       color #eee
       font-weight bold
       font-size 1vw
@@ -454,7 +455,7 @@ ul
       display flex
       align-items center
       justify-content center
-      background-color #eee
+      background-color item-bg
       font-size 1.4vw
       line-height 1.6vw
     .price
@@ -469,7 +470,7 @@ ul
     .item.subAmount
     .item.tax
     .item.subtotal
-      background-color: #ddd
+      background-color: uneditableItem-bg
 
     .result
       grid-column 5 / 7
@@ -490,7 +491,6 @@ ul
 .other
   width 80%
   margin 0 auto
-  //border solid 1px #aaa
   
   .option
     display flex
@@ -513,4 +513,5 @@ p.editable
   transition .12s
   &:hover
     color #40A900
+    
 </style>
