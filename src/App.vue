@@ -72,6 +72,7 @@
       p.editable(contenteditable = "true") ほげほげ
 </template>
 
+
 <script>
 import 'normalize.css'
 let vm
@@ -506,7 +507,6 @@ ul
       line-height 2vw
       text-align left
       margin 0
-
 li.editable
 p.editable
   cursor text
