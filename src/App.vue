@@ -4,36 +4,36 @@
     .meta
       .number
         p 御見積番号 : 
-        p.editable(contenteditable = 'true') 000000
+        p.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 000000
       .date
         p 発行日 : 
-        p.editable(contenteditable = 'true') 0000
+        p.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 0000
 
   h1 {{ msg }}
   .information
     ul.direction
-      li.editable(contenteditable = 'true') {{ direction.company }}
-      li.editable(contenteditable = 'true') 〒 {{ direction.postalCode }}
-      li.editable(contenteditable = 'true') {{ direction.address1 }}
-      li.editable(contenteditable = 'true') {{ direction.address2 }}
-      li.editable(contenteditable = 'true') {{ direction.person }}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{ direction.company }}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 〒 {{ direction.postalCode }}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{ direction.address1 }}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{ direction.address2 }}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{ direction.person }}
     ul.from
-      //- li.editable(contenteditable = 'true') {{from.company}}
-      li.editable(contenteditable = 'true') 〒 {{from.postalCode}}
-      li.editable(contenteditable = 'true') {{from.address1}}
-      li.editable(contenteditable = 'true') {{from.address2}}
-      li.editable(contenteditable = 'true') TEL : {{from.phone}}
-      li.editable(contenteditable = 'true') {{from.fax}}
-      li.editable(contenteditable = 'true') MAIL : {{from.Email}}
-      li.editable(contenteditable = 'true') 担当 : {{from.person}}
+      //- li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{from.company}}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 〒 {{from.postalCode}}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{from.address1}}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{from.address2}}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") TEL : {{from.phone}}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{from.fax}}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") MAIL : {{from.Email}}
+      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 担当 : {{from.person}}
 
   .estimatePrice
     ul.table
       li.payHeading 御見積り金額
       li.payItem {{ total }} 円
     ul.table
-      li.heading.number Main No.
-      li.heading.number sub no.
+      li.heading.number Main Tag.
+      li.heading.number sub tag.
       li.heading.date 年 / 月 / 日
       li.heading.name 品目名
       li.heading 単価
@@ -42,12 +42,12 @@
 
     div#sortable
       ul.table(v-for = "(value, key) in object")
-        li.item.number.editable(contenteditable='true' @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }}
-        li.item.number.editable(contenteditable='true' @blur="onBlur($event, key, 'subNo')") {{ value.subNo }}
-        li.item.date.editable(contenteditable='true' @blur="onBlur($event, key, 'date')") {{ value.date }}
-        li.item.name.editable(contenteditable='true' @blur="onBlur($event, key, 'name')") {{ value.name }}
-        li.item.price.editable(contenteditable='true' @blur="onBlur($event, key, 'price')") {{ value.price }}
-        li.item.amount.editable(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
+        li.item.number.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }}
+        li.item.number.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'subNo')") {{ value.subNo }}
+        li.item.date.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'date')") {{ value.date }}
+        li.item.name.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'name')") {{ value.name }}
+        li.item.price.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'price')") {{ value.price }}
+        li.item.amount.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'num')") {{ value.num }}
         li.item.subtotal(contenteditable='false' @blur="onBlur($event, key, 'sum')") {{ value.sum }}
 
     ul.table
@@ -242,6 +242,7 @@ export default {
 
   mounted () {
     vm = this
+
     document.getElementsByClassName('total')[0].addEventListener(('click'), () => {
       console.log(vm.object)
     })
@@ -273,13 +274,23 @@ export default {
     })
     vm.getDatas()
 
-    const el = document.getElementById('sortable')
-    console.log("el is : " + el)
-    console.log("hello "+Sortable);
+    const el = document.getElementById('sortable')  
     const sortable = Sortable.create(el,{
       animation: 150
     })
-  
+    let editable = document.getElementsByClassName('editable')
+    for(let i=0 ; i < editable.length ; i++){
+      editable[i].addEventListener(('click'), ()=>{
+        editable[i].contentEditable = "true"
+        console.log(i+ " : " + editable[i].contentEditable)
+      })
+    }
+    for(let i=0 ; i < editable.length ; i++){
+      editable[i].addEventListener(('mousemove'), ()=>{
+        editable[i].contentEditable = "false"
+        console.log(i+ " : " + editable[i].contentEditable)
+      })
+    }
   },
 
   methods: {
