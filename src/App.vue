@@ -42,12 +42,12 @@
 
     div#sortable
       ul.table(v-for = "(value, key) in object")
-        li.item.number.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }}
-        li.item.number.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'subNo')") {{ value.subNo }}
-        li.item.date.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'date')") {{ value.date }}
-        li.item.name.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'name')") {{ value.name }}
-        li.item.price.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'price')") {{ value.price }}
-        li.item.amount.editable(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'num')") {{ value.num }}
+        li.item.number.editable.editableitem(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }}
+        li.item.number.editable.editableitem(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'subNo')") {{ value.subNo }}
+        li.item.date.editable.editableitem(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'date')") {{ value.date }}
+        li.item.name.editable.editableitem(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'name')") {{ value.name }}
+        li.item.price.editable.editableitem(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'price')") {{ value.price }}
+        li.item.amount.editable.editableitem(contenteditable='false' ondblclick="document.execCommand('selectAll',false,null)" @blur="onBlur($event, key, 'num')") {{ value.num }}
         li.item.subtotal(contenteditable='false' @blur="onBlur($event, key, 'sum')") {{ value.sum }}
 
     ul.table
@@ -65,16 +65,16 @@
   .other
     .option
       h4 支払条件
-      p.editable(contenteditable = "true") あいうえお
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)" ) あいうえお
     .option
       h4 振込手数料負担
-      p.editable(contenteditable = "true") 御社にてご負担願います
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") 御社にてご負担願います
     .option
       h4 有効期限
-      p.editable(contenteditable = "true") 発行日から2019/2/1まで
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") 発行日から2019/2/1まで
     .option
       h4 備考
-      p.editable(contenteditable = "true") ほげほげ
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") ほげほげ
 </template>
 
 <script>
@@ -242,7 +242,7 @@ export default {
 
   mounted () {
     vm = this
-    let editable = document.getElementsByClassName('editable')
+    let editable = document.getElementsByClassName('editableitem')
 
     document.getElementsByClassName('total')[0].addEventListener(('click'), () => {
       console.log(vm.object)
@@ -280,7 +280,7 @@ export default {
       animation: 150,
       onEnd: ()=> {
         console.log("end dragging")
-        editable = document.getElementsByClassName('editable')
+        editable = document.getElementsByClassName('editableitem')
         for(let i=0 ; i < editable.length ; i++){
           editable[i].addEventListener(('click'), ()=>{
             editable[i].contentEditable = "true"
