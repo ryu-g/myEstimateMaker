@@ -242,6 +242,7 @@ export default {
 
   mounted () {
     vm = this
+    let editable = document.getElementsByClassName('editable')
 
     document.getElementsByClassName('total')[0].addEventListener(('click'), () => {
       console.log(vm.object)
@@ -276,9 +277,19 @@ export default {
 
     const el = document.getElementById('sortable')  
     const sortable = Sortable.create(el,{
-      animation: 150
+      animation: 150,
+      onEnd: ()=> {
+        console.log("end dragging")
+        editable = document.getElementsByClassName('editable')
+        for(let i=0 ; i < editable.length ; i++){
+          editable[i].addEventListener(('click'), ()=>{
+            editable[i].contentEditable = "true"
+            console.log(i+ " : " + editable[i].contentEditable)
+          })
+        }
+      }
     })
-    let editable = document.getElementsByClassName('editable')
+    
     for(let i=0 ; i < editable.length ; i++){
       editable[i].addEventListener(('click'), ()=>{
         editable[i].contentEditable = "true"
