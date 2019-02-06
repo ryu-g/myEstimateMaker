@@ -2,26 +2,31 @@
 #app
   .metaInfo
     .meta
-      p 御見積番号 : 000000
-      p 発行日 : 0000
+      .number
+        p 御見積番号 : 
+        p.editable(contenteditable = 'true') 000000
+      .date
+        p 発行日 : 
+        p.editable(contenteditable = 'true') 0000
+
   h1 {{ msg }}
   .information
     ul.direction
-      li {{ direction.company }}
-      li 〒 {{ direction.postalCode }}
-      li {{ direction.address1 }}
-      li {{ direction.address2 }}
-      li {{ direction.person }}
+      li.editable(contenteditable = 'true') {{ direction.company }}
+      li.editable(contenteditable = 'true') 〒 {{ direction.postalCode }}
+      li.editable(contenteditable = 'true') {{ direction.address1 }}
+      li.editable(contenteditable = 'true') {{ direction.address2 }}
+      li.editable(contenteditable = 'true') {{ direction.person }}
     ul.from
-      li {{from.company}}
-      li 〒 {{from.postalCode}}
-      li {{from.address1}}
-      li {{from.address2}}
-      li TEL : {{from.phone}}
-      li {{from.fax}}
-      li MAIL : {{from.Email}}
-      li 担当 : {{from.person}}
-  
+      //- li.editable(contenteditable = 'true') {{from.company}}
+      li.editable(contenteditable = 'true') 〒 {{from.postalCode}}
+      li.editable(contenteditable = 'true') {{from.address1}}
+      li.editable(contenteditable = 'true') {{from.address2}}
+      li.editable(contenteditable = 'true') TEL : {{from.phone}}
+      li.editable(contenteditable = 'true') {{from.fax}}
+      li.editable(contenteditable = 'true') MAIL : {{from.Email}}
+      li.editable(contenteditable = 'true') 担当 : {{from.person}}
+
   .estimatePrice
     ul.table
       li.payHeading 御見積り金額
@@ -35,9 +40,9 @@
       li.heading 数量
       li.heading 金額
 
-    div#hogehoge
+    div#sortable
       ul.table(v-for = "(value, key) in object")
-        li.item.number.editable(contenteditable='true' @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }} 
+        li.item.number.editable(contenteditable='true' @blur="onBlur($event, key, 'mainNo')") {{ value.mainNo }}
         li.item.number.editable(contenteditable='true' @blur="onBlur($event, key, 'subNo')") {{ value.subNo }}
         li.item.date.editable(contenteditable='true' @blur="onBlur($event, key, 'date')") {{ value.date }}
         li.item.name.editable(contenteditable='true' @blur="onBlur($event, key, 'name')") {{ value.name }}
@@ -45,7 +50,6 @@
         li.item.amount.editable(contenteditable='true' @blur="onBlur($event, key, 'num')") {{ value.num }}
         li.item.subtotal(contenteditable='false' @blur="onBlur($event, key, 'sum')") {{ value.sum }}
 
-      
     ul.table
       li.addItem ADD
       li.deleteItem DELETE
@@ -57,9 +61,6 @@
 
       li.result.total 合計
       li.item.total {{ total }}
-
-
-
 
   .other
     .option
@@ -77,7 +78,9 @@
 </template>
 
 <script>
-import 'normalize.css';
+import 'normalize.css'
+import Sortable from 'sortablejs'
+
 let vm
 export default {
   name: 'app',
@@ -86,9 +89,9 @@ export default {
       msg: '御見積書',
       direction: {
         company: "beidp 御中",
-        postalCode: "",
-        address1: "",
-        address2: "",
+        postalCode: "000-0000",
+        address1: "東京都千代田区100-100-100",
+        address2: "hogehogeの建物",
         person: "ご担当: hoge 様"
       },
       // from: {
@@ -102,10 +105,10 @@ export default {
       //   person: "me"
       // },
       from: {
-              company: "ヒゲダルマ株式会社",
+              company: "",
               postalCode: "000-0000",
               address1: "東京都千代田区1-1-1",
-              address2: "クソながファッキンロングネーミングビルディング101",
+              address2: "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
               phone: "090-0909-09-09",
               fax: "9090990",
               Email: "gmail.com@gmail.com",
@@ -243,8 +246,8 @@ export default {
       console.log(vm.object)
     })
     document.getElementsByClassName('addItem')[0].addEventListener(('click'), () => {
-      console.log("clicked ADD");
-      const newData = 
+      console.log("clicked ADD")
+      const newData =
         {
           mainNo: "9",
           subNo: 9,
@@ -256,19 +259,27 @@ export default {
         }
       console.table(newData)
       const index = this.object.length
-      console.log("object length is " + this.object.length);
+      console.log("object length is " + this.object.length)
       vm.$set(this.object, index, newData)
       vm.getDatas()
     })
     document.getElementsByClassName('deleteItem')[0].addEventListener(('click'), () => {
-      console.log("clicked Delete");
+      console.log("clicked Delete")
       const index = this.object.length
       // vm.$delete(this.object, index)
       vm.object.splice(index-1, 1)
-      console.log("delete target object length is " + this.object.length);
+      console.log("delete target object length is " + this.object.length)
       vm.getDatas()
     })
     vm.getDatas()
+
+    const el = document.getElementById('sortable')
+    console.log("el is : " + el)
+    console.log("hello "+Sortable);
+    const sortable = Sortable.create(el,{
+      animation: 150
+    })
+  
   },
 
   methods: {
@@ -285,9 +296,48 @@ export default {
       }
       vm.subtotal = sum.toLocaleString()          // add camma to subtotal
       const subs = vm.removeLetter(vm.subtotal)      // shrink subtotal
-      vm.tax = Math.floor(subs * vm.taxRatio - subs) // calc tax 
+      vm.tax = Math.floor(subs * vm.taxRatio - subs) // calc tax
       vm.tax = vm.tax.toLocaleString()                // add camma to tax
       vm.total = (vm.removeLetter(subs) + vm.removeLetter(vm.tax)).toLocaleString() //calc total
+    },
+    createDataBase:(dbName)=>{
+      const openReq = indexedDB.open(dbName)
+      openReq.onupgradeneeded = (event) =>{
+        console.log('db upgrade')
+        db = event.target.result
+        db.createObjectStore('storeName', {keyPath : 'id'})
+      }
+      openReq.onsuccess = (event)=>{
+        console.log('database open success')
+        const db = event.target.result
+        console.log("db version is "+ db.version)
+        db.close()
+      }
+      openReq.onerror = (event)=>{
+        console.log('db open failed with error')
+      }
+    },
+
+    deleteDataBase:(dbName)=>{
+      const deleteReq = indexedDB.deleteDatabase(dbName)
+      deleteReq.onsuccess = (event)=>{
+        console.log('db delete success')
+      }
+      deleteReq.onerror = (event)=>{
+        console.log('db delete failed with error')
+      }
+    },
+
+    insertData:(dbName, id, name)=>{
+      const data = {id : id, name: name}
+      const openReq = indexedDB.open(dbName)
+      openReq.onsucssess = (event)=>{
+        const db = event.target.result
+        const trnas = db.transaction(storeName, 'readwrite')
+        const store = trans.objectStore(storeName)
+        const purReq = store.put(data)
+      }
+
     },
 
     removeLetter: (txt) => {
@@ -297,9 +347,11 @@ export default {
       }
       return Number(txt)
     },
+
     AndAddComma: (num) => {
       return num.toLocaleString()
     },
+
     //数字入力欄のフォーカス解除時発火
     onBlur: (e, i, param) => {
       vm.object[i][param] = e.target.innerText
@@ -315,12 +367,12 @@ export default {
           //console.log("[285]sum is : " + (vm.object[i].sum))
           sum += vm.removeLetter(vm.object[i].sum)
           vm.object[i].sum = vm.object[i].sum.toLocaleString()
-          console.log("[287]added sum is  " + vm.removeLetter(sum));
+          console.log("[287]added sum is  " + vm.removeLetter(sum))
         }
-        console.log("-------");
+        console.log("-------")
         vm.subtotal = sum.toLocaleString()
         const subs = vm.removeLetter(vm.subtotal)
-        console.log("subs: "+subs);
+        console.log("subs: "+subs)
         vm.tax = Math.floor(subs * vm.taxRatio - subs)
         vm.tax = vm.tax.toLocaleString()
         vm.total = (vm.removeLetter(subs) + vm.removeLetter(vm.tax)).toLocaleString()
@@ -337,7 +389,7 @@ h1 h2 h3 h4 div p ul li
   margin 0
   padding 0
 
-#app 
+#app
   font-family  Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
@@ -359,7 +411,7 @@ h1 h2 h3 h4 div p ul li
     font-weight bold
     text-align left
 
-ul 
+ul
   list-style-type none
   padding 0
   margin 0
@@ -381,14 +433,23 @@ ul
   margin 40px auto 0 auto
   text-align left
   color #777
-  p 
-    font-size 1.2vw 
+  p
+    font-size 1.2vw
+    margin .5vw .25vw 
+  .meta
+    display flex
+    flex-direction column
+    .number
+    .date
+      display flex
+      flex-direction default
+    
 .information
   width 80%
   margin 20px auto
   display flex
   text-align left
-  
+
   .direction
     width 50%
     li
@@ -416,7 +477,7 @@ ul
       padding .6vw .5vw
       font-size 1.4vw
       overflow hidden
- 
+
     .addItem
       background-color #7CBF7F
       color white
@@ -439,7 +500,7 @@ ul
       grid-column 4 / 5
       background-color #eee
       font-weight bold
-      
+
     .heading
       background-color #333
       color #eee
@@ -463,9 +524,9 @@ ul
     .subAmount
     .tax
     .total
-      justify-content flex-end  
+      justify-content flex-end
 
-    .item.total 
+    .item.total
     .item.subAmount
     .item.tax
     .item.subtotal
@@ -491,7 +552,7 @@ ul
   width 80%
   margin 0 auto
   //border solid 1px #aaa
-  
+
   .option
     display flex
     align-items flex-start
@@ -513,4 +574,10 @@ p.editable
   transition .12s
   &:hover
     color #40A900
+.sortable-chosen 
+  color: #fff;
+  background-color #40A900
+  .item
+    background-color #40A900
+
 </style>
