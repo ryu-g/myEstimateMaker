@@ -78,7 +78,7 @@
 </template>
 
 <script>
- import 'normalize.css'
+import 'normalize.css'
 import Sortable from 'sortablejs'
 import itemdata from './assets/aqreate-web.json'
 
@@ -96,7 +96,7 @@ export default {
     vm = this
     vm.getDatas()
     let editable = document.getElementsByClassName('editableitem')
-    // document.getElementsByClassName('total')[0].addEventListener(('click'), () => {console.log(vm)})
+    document.getElementsByClassName('total')[0].addEventListener(('click'), () => {console.log(vm)})
 
     document.getElementsByClassName('addItem')[0].addEventListener(('click'), vm.addItem)
     document.getElementsByClassName('deleteItem')[0].addEventListener(('click'), vm.deleteItem)
@@ -143,6 +143,7 @@ export default {
       vm.datalist.tax = vm.datalist.tax.toLocaleString()                // add camma to tax
       vm.datalist.total = (vm.removeLetter(subs) + vm.removeLetter(vm.datalist.tax)).toLocaleString() //calc total
     },
+
     addItem(){
       let editable = document.getElementsByClassName('editableitem')
       console.log("clicked ADD")
@@ -152,20 +153,23 @@ export default {
           subNo: 999,
           date: "2018/12/31",
           name: 'sample',
-          price: 10000,
+          price: "10,000",
           num: 1,
           sum: 0
-        }
+        }  
       console.table(newData)
       const index = this.datalist.object.length
       console.log("object length is " + this.datalist.object.length)
       vm.$set(this.datalist.object, index, newData)
-      for(let i = editable.length-5; i < editable.length ; i++){
-        editable[i].addEventListener(('click'), function(){vm.editableMakeTrue(i)})
-        editable[i].addEventListener(('mouseleave'),function(){vm.editableMakeFalse(i)})
-        //console.log(editable[i+5]);
-      }
       vm.getDatas()
+      vm.$nextTick(()=>{
+        for(let i = editable.length-5; i < editable.length ; i++){
+          editable[i].addEventListener(('click'), function(){vm.editableMakeTrue(i)})
+          editable[i].addEventListener(('mouseleave'),function(){vm.editableMakeFalse(i)})
+          console.log(editable[i]);
+        }
+      })
+
     },
     deleteItem(){
       console.log("clicked Delete")
@@ -204,27 +208,30 @@ export default {
       return Number(txt)
     },
 
+    makeEditable: (e, i, param) =>{
+      console.log(vm.datalist.object[i][param])
+      vm.datalist.object[i][param].contentEditable = 'true'
+    },
+    makeDiseditable: (e, i, param) =>{
+      console.log(vm.datalist.object[i][param])
+      vm.datalist.object[i][param].contentEditable = 'false'
+    },
+
     //数字入力欄のフォーカス解除時発火
     onBlur: (e, i, param) => {
       vm.datalist.object[i][param] = e.target.innerText
       if (param === 'num' || param === 'price') {
         let sum = 0
-
         vm.datalist.object[i][param] = vm.removeLetter(vm.datalist.object[i][param]).toLocaleString()//異物を撮ってからComma追加
         e.target.innerText = vm.datalist.object[i][param]
         vm.datalist.object[i]['sum'] = vm.removeLetter(vm.datalist.object[i]['num']) * vm.removeLetter(vm.datalist.object[i]['price'])
         vm.datalist.object[i]['sum'] = Number(vm.datalist.object[i]['sum'])
-        // calcurate datalist.subtotal with price by num
         for (const i in vm.datalist.object) {
-          //console.log("[285]sum is : " + (vm.datalist.object[i].sum))
           sum += vm.removeLetter(vm.datalist.object[i].sum)
           vm.datalist.object[i].sum = vm.datalist.object[i].sum.toLocaleString()
-          console.log("[287]added sum is  " + vm.removeLetter(sum))
         }
-        console.log("-------")
         vm.datalist.subtotal = sum.toLocaleString()
         const subs = vm.removeLetter(vm.datalist.subtotal)
-        console.log("subs: "+subs)
         vm.datalist.tax = Math.floor(subs * vm.datalist.taxRatio - subs)
         vm.datalist.tax = vm.datalist.tax.toLocaleString()
         vm.datalist.total = (vm.removeLetter(subs) + vm.removeLetter(vm.datalist.tax)).toLocaleString()
