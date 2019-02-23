@@ -4,10 +4,10 @@
     .meta
       .number
         p 御見積番号 : 
-        p.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 000000
+        p.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{datalist.publishNumber}}
       .date
         p 発行日 : 
-        p.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 0000
+        p.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{datalist.publishDate}}
 
   h1 {{ datalist.msg }}
   .information
@@ -18,7 +18,7 @@
       //- li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{ direction.address2 }}
       li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{ datalist.direction.person }}
     ul.from
-      li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{datalist.from.company}}
+      //- li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{datalist.from.company}}
       li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") 〒 {{datalist.from.postalCode}}
       li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{ datalist.from.address1}}
       //- li.editable(contenteditable = 'true' onclick="document.execCommand('selectAll',false,null)") {{from.address2}}
@@ -64,17 +64,23 @@
 
   .other
     .option
+      h4 作業開始時期と納期
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)" )  本内容の受領を業務受託契約として、契約成立から4週間後を納期とします。
+    .option
       h4 支払条件
-      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)" ) あいうえお
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)" ) {{datalist.PaymentTerms}}
+    .option
+      h4 振込口座
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)" ) 別途ご連絡させていただきます。
     .option
       h4 振込手数料負担
-      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") 御社にてご負担願います
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") {{datalist.TransferFee}}
     .option
       h4 有効期限
-      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") 発行日から2019/2/1まで
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") {{datalist.expirationDate}}
     .option
       h4 備考
-      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") ほげほげ
+      p.editable(contenteditable = "true" onclick="document.execCommand('selectAll',false,null)") {{datalist.Remarks}}
 </template>
 
 <script>
@@ -107,18 +113,14 @@ export default {
       onEnd: ()=> {
         console.log("end dragging")
         editable = document.getElementsByClassName('editableitem')
+        vm.$nextTick(vm.rebuildObject())
         for(let i=0 ; i < editable.length ; i++){
-          // editable[i].removeEventListener(('click'), vm.editableMakeTrue)
-          // editable[i].removeEventListener(('mouseleave'), vm.editableMakeFalse )
           editable[i].addEventListener(('click'), function(){vm.editableMakeTrue(i)})
           editable[i].addEventListener(('mouseleave'),function(){vm.editableMakeFalse(i)})
         }
       }
     })
-    // for(let i=0 ; i < editable.length ; i++){
-    //   editable[i].addEventListener(('click'), function(){vm.editableMakeTrue(i)})
-    //   editable[i].addEventListener(('mouseleave'),function(){vm.editableMakeFalse(i)})
-    // }
+
     for(let i=0 ; i < editable.length ; i++){
       editable[i].addEventListener(('click'), function(){vm.editableMakeTrue(i)})
       editable[i].addEventListener(('mouseleave'),function(){vm.editableMakeFalse(i)})
@@ -142,6 +144,37 @@ export default {
       vm.datalist.tax = Math.floor(subs * vm.datalist.taxRatio - subs) // calc tax
       vm.datalist.tax = vm.datalist.tax.toLocaleString()                // add camma to tax
       vm.datalist.total = (vm.removeLetter(subs) + vm.removeLetter(vm.datalist.tax)).toLocaleString() //calc total
+    },
+    rebuildObject(){
+      const element = document.getElementsByClassName('item')
+      let obj = vm.datalist.object
+      console.log("element : " + element)
+      console.log(obj[1])
+      let mainNo = [obj.length]
+      let subNo = [obj.length]
+      let name = [obj.length]
+      let price = [obj.length]
+      let num = [obj.length]
+      let sum = [obj.length]
+
+      for(let i = 0 ; i< obj.length; i++){    
+         mainNo[i] = element[ i*6 + 0 ].innerText
+         subNo[i] = element[ i*6 + 1 ].innerText
+         name[i] = element[ i*6 + 2 ].innerText
+         price[i] = element[ i*6 + 3 ].innerText
+         num[i] = element[ i*6 + 4 ].innerText
+         sum[i] = element[ i*6 + 5 ].innerText
+        //console.log("sum : "+ element[5].innerText)
+      }
+      for(let i = 0 ; i<obj.length; i++){
+        obj[i].mainNo = mainNo[i]
+        obj[i].subNo = subNo[i]
+        obj[i].name = name[i]
+        obj[i].price = price[i]
+        obj[i].num = num[i]
+        obj[i].sum = sum[i]
+        console.log(obj[1])
+      }
     },
 
     addItem(){
@@ -278,9 +311,10 @@ ul
 @media print
   #app
     width 100%
-    height 141vw
+    height 140vw
     margin 0
     padding 0
+    border none
   .addItem
   .deleteItem
     display none
@@ -419,6 +453,7 @@ ul
     h4
       display block
       width 14vw
+      line-height 2vw
       margin 0
     p
       width 65vw
