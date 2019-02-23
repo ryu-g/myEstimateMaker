@@ -1,0 +1,256 @@
+{
+  "msg" : "御見積書",
+  "direction": {
+    "company": "Atelier Aqreate 御中",
+    "postalCode": "040-0004",
+    "address1": "函館市杉並町8-20 オカダビル1F",
+    "person": "ご担当 : 菊池 優 様"
+  },
+  "from" : {
+    "company": "",
+    "postalCode": "012-0812",
+    "address1": "函館市昭和1丁目3-40",
+    "address2": "サンビレッジ昭和ウェスト館108号",
+    "phone": "090-6870-8093",
+    "Email": "em.ryu.g@gmail.com",
+    "person": "村山 竜次"
+  },
+  "object": [
+  {
+    "mainNo": "デザイン",
+    "subNo": 1,
+    "name": "トップページデザイン",
+    "price": "50,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 2,
+    "name": "カレンダーページデザイン",
+    "price": "10,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 3,
+    "name": "YWCA紹介ページデザイン",
+    "price": "12,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 4,
+    "name": "YWCA活動紹介ページデザイン",
+    "price": "5,000",
+    "num": 5,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 5,
+    "name": "各種教室一覧ページデザイン",
+    "price": "10,000",
+    "num": 4,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 6,
+    "name": "お問い合わせページデザイン(地図+問い合わせフォーム)",
+    "price": "10,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 7,
+    "name": "リンク集ページデザイン",
+    "price": "5,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 8,
+    "name": "貸室情報ページデザイン",
+    "price": "6,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 9,
+    "name": "定期/単発講座申込みページデザイン",
+    "price": "6,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 10,
+    "name": "特別受注品申し込みページデザイン",
+    "price": "6,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 11,
+    "name": "募金・寄付ページデザイン",
+    "price": "5,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 12,
+    "name": "個人情報保護方針ページデザイン",
+    "price": "5,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 13,
+    "name": "お知らせページデザイン",
+    "price": "10,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "開発",
+    "subNo": 1,
+    "name": "トップページ開発",
+    "price": "30,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 2,
+    "name": "カレンダーページ開発",
+    "price": "10,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 3,
+    "name": "YWCA紹介ページ開発",
+    "price": "6,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 4,
+    "name": "YWCA活動紹介ページ開発",
+    "price": "6,000",
+    "num": 5,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 5,
+    "name": "各種教室一覧ページ開発",
+    "price": "12,000",
+    "num": 4,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 6,
+    "name": "お問い合わせページ開発(地図+問い合わせフォーム)",
+    "price": "34,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 7,
+    "name": "リンク集ページ開発",
+    "price": "5,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 8,
+    "name": "貸室情報ページ開発",
+    "price": "25,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 9,
+    "name": "定期/単発講座申込みページ開発",
+    "price": "25,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 10,
+    "name": "特別受注品申し込みページ開発",
+    "price": "25,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 11,
+    "name": "募金・寄付ページ開発",
+    "price": "5,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 12,
+    "name": "個人情報保護方針ページ開発",
+    "price": "5,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "",
+    "subNo": 13,
+    "name": "お知らせページ開発",
+    "price": "25,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "サーバー設定",
+    "subNo": 1,
+    "name": "サーバー設定及び本番環境の整備、CMSの導入",
+    "price": "50,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "仕様書作成",
+    "subNo": 1,
+    "name": "webページの構成に関する仕様書作成",
+    "price": "10,000",
+    "num": 1,
+    "sum": 0
+  },
+  {
+    "mainNo": "運用者向け研修",
+    "subNo": 1,
+    "name": "運用者向け研修及びその資料作成",
+    "price": "25,000",
+    "num": 1,
+    "sum": 0
+  }
+],
+  "subtotal" : 0,
+  "taxRatio" : 1.08,
+  "tax": 0,
+  "total": 0
+}
